@@ -2,7 +2,7 @@
 
 A very simple racing "game" I made for my 2.5 yr old. The worst kind of code you could ever find, cobbled together from everywhere.
 
-![]()
+![](img/demo.gif)
 
 ## Pros
 
