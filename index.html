@@ -1,0 +1,281 @@
+<html>
+<style>
+html, body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+body {
+  background: url('img/city.jpg') no-repeat;
+  background-position: 0 -300px;
+  background-size: 100%;
+}
+
+
+
+.background-wrapper{
+  perspective: 500px;
+  position: relative;
+  top: -60%
+}
+
+.background {
+  transform: rotateX(88deg);
+  background: gray url('img/07c2b8bcad9fb6a6efb8d3c62e5f3080.jpg') repeat 0 0;
+  width: 100%;
+  height: 200%;
+  margin: 0;
+  text-align: center;
+  padding-top: 240px;
+  box-sizing: border-box;
+  animation: slidestraight 1s linear infinite;
+  transform: rotateX(85deg);
+}
+/*.background[dir=left]{
+  animation: slideleft 1s linear infinite;
+  transform: rotateX(85deg);
+
+}*/
+.background[dir=straight]{
+  animation: slidestraight 1s linear infinite;
+  transform: rotateX(85deg);
+}
+/*.background[dir=right]{
+  animation: slideright 1s linear infinite;
+  transform: rotateX(85deg);
+}*/
+@keyframes slideleft {
+    from { background-position: 0 0; }
+    to { background-position: 0 240px; }
+}
+@keyframes slidestraight {
+    from { background-position: 0 0; }
+    to { background-position: 0 240px; }
+}
+@keyframes slideright {
+    from { background-position: 0 0; }
+    to { background-position: -0 240px; }
+}
+
+
+#car {
+  display: block;
+  visibility: none;
+  position: absolute;
+  bottom: 40px;
+  animation: shake 0.05s; 
+  animation-iteration-count: infinite; 
+
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+#car[vehicle=car][dir=left]{
+  background: url('img/car_sprites_2x.png') no-repeat -1993px -3067px;
+  width: 340px;
+  height: 168px;
+}
+#car[vehicle=car][dir=straight]{
+  background: url('img/car_sprites_2x.png') no-repeat -1619px -3063px;
+  width: 340px;
+  height: 176px;
+}
+#car[vehicle=car][dir=right]{
+  background: url('img/car_sprites_2x.png') no-repeat -1229px -3067px;
+  width: 340px;
+  height: 168px;
+}
+
+#car[vehicle=ambo][dir=left]{
+  background: url('img/car_sprites_2x.png') no-repeat -1985px -6023px;
+  width: 355px;
+  height: 254px;
+}
+#car[vehicle=ambo][dir=straight]{
+  background: url('img/car_sprites_2x.png') no-repeat -1630px -6023px;
+  width: 355px;
+  height: 252px;
+}
+#car[vehicle=ambo][dir=right]{
+  background: url('img/car_sprites_2x.png') no-repeat -1221px -6023px;
+  width: 355px;
+  height: 254px;
+}
+
+
+#car[vehicle=police][dir=left]{
+  background: url('img/car_sprites_2x.png') no-repeat -1995px -6361px;
+  width: 334px;
+  height: 180px;
+}
+#car[vehicle=police][dir=straight]{
+  background: url('img/car_sprites_2x.png') no-repeat -1622px -6361px;
+  width: 334px;
+  height: 180px;
+}
+#car[vehicle=police][dir=right]{
+  background: url('img/car_sprites_2x.png') no-repeat -1233px -6361px;
+  width: 334px;
+  height: 180px;
+}
+
+
+#car[vehicle=fire][dir=left]{
+  background: url('img/car_sprites_2x.png') no-repeat -1997px -6663px;
+  width: 330px;
+  height: 194px;
+}
+#car[vehicle=fire][dir=straight]{
+  background: url('img/car_sprites_2x.png') no-repeat -1662px -6657px;
+  width: 330px;
+  height: 210px;
+}
+#car[vehicle=fire][dir=right]{
+  background: url('img/car_sprites_2x.png') no-repeat -1235px -6663px;
+  width: 330px;
+  height: 194px;
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script>
+var mvmt = 25;
+function moveLeft(){
+  var car = $("#car");
+  car.attr("dir", "left");
+  $(".background").attr("dir", "left");
+  car.css({
+    left: Math.max(0, car.position().left - mvmt) + "px"
+  });
+}
+function moveRight(){
+  var car = $("#car");
+  car.attr("dir", "right");
+  $(".background").attr("dir", "right");
+  var maxWidth = $(window).width() - car.width();
+  car.css({
+    left: Math.min(maxWidth, car.position().left + mvmt) + "px"
+  });
+}
+function moveUp(){
+  var car = $("#car");
+  car.stop().animate({
+    bottom: "80px"
+  });
+}
+function straight(){
+  var car = $("#car");
+  car.attr("dir", "straight");
+  $(".background").attr("dir", "straight");
+  car.stop().animate({
+    bottom: "40px"
+  });
+}
+$( document ).ready(function() {
+  var car = $("#car");
+  car.css({
+      left: $(window).width() / 2 - car.width() / 2 + "px",
+      visibility: "visible"
+  });
+});
+function car(){
+  $("audio").each(function(){ this.pause()});
+  var car = $("#car");
+  car.attr("vehicle", "car");
+}
+function ambo(){
+  $("audio").each(function(){ this.pause()});
+  var car = $("#car");
+  car.attr("vehicle", "ambo");
+}
+function fire(){
+  $("audio").each(function(){ this.pause()});
+  var car = $("#car");
+  car.attr("vehicle", "fire");
+}
+function police(){
+  $("audio").each(function(){ this.pause()});
+  var car = $("#car");
+  car.attr("vehicle", "police");
+}
+
+function playSound(){
+  var audio = $("#audio-" + $("#car").attr("vehicle"));
+  if(audio.attr("playing")){
+    audio[0].pause();
+    audio.attr("playing", false);
+  } else {
+    audio[0].play();
+    audio.attr("playing", true);
+  }
+}
+$(document).keydown(function(e) {
+  switch(e.which) {
+
+    case 37: // left
+      moveLeft();
+    break;
+    case 38: // up
+      moveUp();
+    break;
+    case 39: // right
+      moveRight();
+    break;
+
+
+    case 49: // 1
+      car();
+    break;
+    case 50: // 2
+      ambo()
+    break;
+    case 51: // 3
+      police()
+    break;
+    case 52: // 4
+      fire()
+    break;
+
+
+    case 32: // spacebar
+      playSound();
+    break;
+
+    default: return; // exit this handler for other keys
+  }
+  $(document).keyup(function(e) {
+    straight();
+  });
+  e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+</script>
+<body>
+
+  <div class="background-wrapper">
+    <div class="background" dir="straight"></div>
+  </div>
+  <div id="car" vehicle="car" dir="straight">
+  </div>
+  <!-- <iframe src="sound/sound.mp3" allow="autoplay" style="display:none" id="iframeAudio"> -->
+
+  <audio loop id="audio-car" src="sound/car.wav"></audio>
+  <audio loop id="audio-ambo" src="sound/ambo.wav"></audio>
+  <audio loop id="audio-police" src="sound/police.wav"></audio>
+  <audio loop id="audio-fire" src="sound/fire.wav"></audio>
+
+</iframe> 
+
+</body>
